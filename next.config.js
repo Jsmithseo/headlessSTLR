@@ -20,5 +20,7 @@ module.exports = {
         pathname: `${pathname}/**`,
       },
     ],
+    domains: ['i0.wp.com', 'secure.gravatar.com'],
   },
 };
+
