@@ -17,24 +17,31 @@ import { LoadingSpinner } from "../ui/loading-spinner";
 import { _createNewUser } from "../../models/user.model";
 
 function SignupForm() {
-  //show or hide password state
+  // show or hide password state
   const [showPassword, setShowPassword] = useState(false);
   function _showPassword() {
     setShowPassword(!showPassword);
   }
 
-  //use router to navigate to login page after successful sign in
+  // use router to navigate to login page after successful sign in
   const router = useRouter();
 
-  //error message
+  // error message
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  //handle form state
+  // handle form state
   const form = useForm();
-
-  const { register, handleSubmit, formState } = form;
+  const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+      setSuccessMessage("Account created successfully!");
+      setErrorMessage("");
+    }
+  }, [isSubmitSuccessful, reset]);
 
   async function onSubmit(data) {
     const formData = {
@@ -44,10 +51,16 @@ function SignupForm() {
       password: data.password,
     };
 
+    setErrorMessage("");
+    setSuccessMessage("");
+
     try {
       const response = await _createNewUser(formData);
-      response.error && setErrorMessage(response.error);
-      response.message && setSuccessMessage(response.message);
+      if (response.error) {
+        setErrorMessage(response.error);
+      } else {
+        setSuccessMessage(response.message);
+      }
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -64,7 +77,7 @@ function SignupForm() {
   }, [toast, successMessage]);
 
   return (
-    <div className="form-container flex  flex-col items-center justify-center gap-4">
+    <div className="form-container flex flex-col items-center justify-center gap-4">
       <header className="flex flex-col items-center justify-center">
         <p>Welcome</p>
         <p>Please sign up to continue</p>
@@ -74,6 +87,10 @@ function SignupForm() {
           action=""
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(onSubmit)}
+          onChange={() => {
+            setErrorMessage("");
+            setSuccessMessage("");
+          }}
         >
           <aside className="flex flex-col gap-4">
             <Button className="hover:bg-gray-3 w-full hover:bg-gray-100">
