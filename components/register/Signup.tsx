@@ -16,35 +16,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { _createNewUser } from "../../models/user.model";
-//react-tostify
-// export const Toaster = () => {
-//   <ToastContainer
-//     position="top-right"
-//     autoClose={5000}
-//     hideProgressBar={false}
-//     newestOnTop={false}
-//     closeOnClick
-//     rtl={false}
-//     pauseOnFocusLoss
-//     draggable
-//     pauseOnHover
-//   />;
-// };
-
-// export const useToast = () => {
-//   const showToast = (message, type = "default") => {
-//     switch (type) {
-//       case "success":
-//         toast.success(message);
-//         break;
-//       case "error":
-//         toast.error(message);
-//         break;
-//       default:
-//         toast(message);
-//     }
-//   };
-// };
 
 function SignupForm() {
   // show or hide password state
@@ -65,18 +36,7 @@ function SignupForm() {
   const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
 
-  // useEffect(() => {
-  //   if (isSubmitSuccessful) {
-  //     setSuccessMessage("Account created successfully!");
-  //     setErrorMessage("");
-  //   }
-  // }, [isSubmitSuccessful]);
-
-  // useEffect(() => {
-  //   if (successMessage) {
-  //     toast(successMessage);
-  //   }
-  // }, [toast, successMessage]);
+  //
 
   async function onSubmit(data) {
     const formData = {
