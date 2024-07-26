@@ -39,7 +39,7 @@ export async function _createNewUser(userData) {
       return { error: " User with this email already exists" };
     }
     const docRef = await addDoc(collection(db, "users"), userData);
-    console.log(docRef.id);
+
     return { id: docRef.id, message: "User successfully created" };
   } catch (error) {
     console.log(error);
