@@ -1,38 +1,49 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useToast } from "../ui/use-toast";
-
-import { _createNewUser } from "../../models/user.model";
-
 import Button from "./button";
 import { FcGoogle } from "react-icons/fc";
 import { Separator } from "../ui/separator";
 import Input from "./input";
 import InputContainer from "./inputContainer";
 import Label from "./label";
+import { useForm } from "react-hook-form";
 import ErrorMessage from "./errorMessage";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { LoadingSpinner } from "../ui/loading-spinner";
+import { _createNewUser } from "../../models/user.model";
+import { Toaster } from "../../components/ui/toaster";
+import { useToast } from "../ui/use-toast";
 
 function SignupForm() {
-  // show or hide password state
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const router = useRouter();
+  const form = useForm();
+  const { register, handleSubmit, formState, reset } = form;
+  const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  const { toast } = useToast();
+
   function _showPassword() {
     setShowPassword(!showPassword);
   }
 
-  // error and success state
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setSuccessMessage("Account created successfully!");
+      setErrorMessage("");
+    }
+  }, [isSubmitSuccessful]);
 
-  // handle form state
-  const form = useForm();
-  const { register, handleSubmit, formState, reset } = form;
-  const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
 
-  //handle form submission
   async function onSubmit(data) {
     const formData = {
       firstname: data.firstname,
@@ -57,18 +68,9 @@ function SignupForm() {
     }
   }
 
-  //show toast after successful accont creation
-  const { toast } = useToast();
-  useEffect(() => {
-    if (successMessage) {
-      toast({
-        description: successMessage,
-      });
-    }
-  }, [toast, successMessage]);
-
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
+      <Toaster /> {/* Render the Toaster component here */}
       <header className="flex flex-col items-center justify-center">
         <p>Welcome</p>
         <p>Please sign up to continue</p>
@@ -110,9 +112,9 @@ function SignupForm() {
                 }}
                 register={register}
               />
-              {/* {errors.firstname && (
+              {errors.firstname && (
                 <ErrorMessage>{errors.firstname.message}</ErrorMessage>
-              )} */}
+              )}
             </div>
             <div>
               <Label>Lastname*</Label>
@@ -127,9 +129,9 @@ function SignupForm() {
                 }}
                 register={register}
               />
-              {/* {errors.lastname && (
+              {errors.lastname && (
                 <ErrorMessage>{errors.lastname.message}</ErrorMessage>
-              )} */}
+              )}
             </div>
           </InputContainer>
 
@@ -150,9 +152,9 @@ function SignupForm() {
               }}
               register={register}
             />
-            {/* {errors.email && (
+            {errors.email && (
               <ErrorMessage>{errors.email.message}</ErrorMessage>
-            )} */}
+            )}
           </InputContainer>
           <InputContainer className="flex-col gap-1">
             <Label>Password*</Label>
@@ -165,16 +167,12 @@ function SignupForm() {
                   value: true,
                   message: "Password is required",
                 },
-                // pattern: {
-                //   value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-                //   message: "Please enter a stronger password",
-                // },
               }}
               register={register}
             />
-            {/* {errors.password && (
+            {errors.password && (
               <ErrorMessage>{errors.password.message}</ErrorMessage>
-            )} */}
+            )}
 
             <div className="flex flex-row gap-2">
               <input
@@ -196,10 +194,7 @@ function SignupForm() {
               <p className="text-sm">Must be at least 8 characters</p>
             </div>
           </InputContainer>
-          <Button
-            className={`bg-burgendy font-bold leading-6 text-white`}
-            disabled={isSubmitting}
-          >
+          <Button className={`bg-burgendy font-bold leading-6 text-white`}>
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
