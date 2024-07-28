@@ -28,7 +28,6 @@ export default function Index({ allPosts: { edges }, preview }) {
           <RegisterLink href="/register" className="">
             Register
           </RegisterLink>
-          <Toaster />
         </div>
       </Container>
     </Layout>

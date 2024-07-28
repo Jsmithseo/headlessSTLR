@@ -1,50 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useToast } from "../ui/use-toast";
+
+import { _createNewUser } from "../../models/user.model";
+
 import Button from "./button";
 import { FcGoogle } from "react-icons/fc";
 import { Separator } from "../ui/separator";
 import Input from "./input";
 import InputContainer from "./inputContainer";
 import Label from "./label";
-
-import { useForm } from "react-hook-form";
 import ErrorMessage from "./errorMessage";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-
-import { toast, ToastContainer } from "react-toastify";
-
 import { LoadingSpinner } from "../ui/loading-spinner";
-import { _createNewUser } from "../../models/user.model";
-//react-tostify
-// export const Toaster = () => {
-//   <ToastContainer
-//     position="top-right"
-//     autoClose={5000}
-//     hideProgressBar={false}
-//     newestOnTop={false}
-//     closeOnClick
-//     rtl={false}
-//     pauseOnFocusLoss
-//     draggable
-//     pauseOnHover
-//   />;
-// };
-
-// export const useToast = () => {
-//   const showToast = (message, type = "default") => {
-//     switch (type) {
-//       case "success":
-//         toast.success(message);
-//         break;
-//       case "error":
-//         toast.error(message);
-//         break;
-//       default:
-//         toast(message);
-//     }
-//   };
-// };
 
 function SignupForm() {
   // show or hide password state
@@ -53,10 +23,7 @@ function SignupForm() {
     setShowPassword(!showPassword);
   }
 
-  // use router to navigate to login page after successful sign in
-  const router = useRouter();
-
-  // error message
+  // error and success state
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -65,19 +32,7 @@ function SignupForm() {
   const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
 
-  // useEffect(() => {
-  //   if (isSubmitSuccessful) {
-  //     setSuccessMessage("Account created successfully!");
-  //     setErrorMessage("");
-  //   }
-  // }, [isSubmitSuccessful]);
-
-  // useEffect(() => {
-  //   if (successMessage) {
-  //     toast(successMessage);
-  //   }
-  // }, [toast, successMessage]);
-
+  //handle form submission
   async function onSubmit(data) {
     const formData = {
       firstname: data.firstname,
@@ -101,6 +56,16 @@ function SignupForm() {
       console.log(error);
     }
   }
+
+  //show toast after successful accont creation
+  const { toast } = useToast();
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
 
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
@@ -145,9 +110,9 @@ function SignupForm() {
                 }}
                 register={register}
               />
-              {errors.firstname && (
+              {/* {errors.firstname && (
                 <ErrorMessage>{errors.firstname.message}</ErrorMessage>
-              )}
+              )} */}
             </div>
             <div>
               <Label>Lastname*</Label>
@@ -162,9 +127,9 @@ function SignupForm() {
                 }}
                 register={register}
               />
-              {errors.lastname && (
+              {/* {errors.lastname && (
                 <ErrorMessage>{errors.lastname.message}</ErrorMessage>
-              )}
+              )} */}
             </div>
           </InputContainer>
 
@@ -185,9 +150,9 @@ function SignupForm() {
               }}
               register={register}
             />
-            {errors.email && (
+            {/* {errors.email && (
               <ErrorMessage>{errors.email.message}</ErrorMessage>
-            )}
+            )} */}
           </InputContainer>
           <InputContainer className="flex-col gap-1">
             <Label>Password*</Label>
@@ -207,9 +172,9 @@ function SignupForm() {
               }}
               register={register}
             />
-            {errors.password && (
+            {/* {errors.password && (
               <ErrorMessage>{errors.password.message}</ErrorMessage>
-            )}
+            )} */}
 
             <div className="flex flex-row gap-2">
               <input
@@ -231,7 +196,10 @@ function SignupForm() {
               <p className="text-sm">Must be at least 8 characters</p>
             </div>
           </InputContainer>
-          <Button className={`bg-burgendy font-bold leading-6 text-white`}>
+          <Button
+            className={`bg-burgendy font-bold leading-6 text-white`}
+            disabled={isSubmitting}
+          >
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
