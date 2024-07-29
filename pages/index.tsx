@@ -28,10 +28,6 @@ export default function Index({ allPosts: { edges }, preview }) {
           <RegisterLink href="/register" className="">
             Register
           </RegisterLink>
-          <RegisterLink href="/protected" className="">
-            Protected-route
-          </RegisterLink>
-          <Toaster />
         </div>
       </Container>
     </Layout>

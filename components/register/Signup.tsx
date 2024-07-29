@@ -6,37 +6,39 @@ import { Separator } from "../ui/separator";
 import Input from "./input";
 import InputContainer from "./inputContainer";
 import Label from "./label";
-
 import { useForm } from "react-hook-form";
 import ErrorMessage from "./errorMessage";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import { toast, ToastContainer } from "react-toastify";
-
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { _createNewUser } from "../../models/user.model";
+import { Toaster } from "../../components/ui/toaster";
+import { useToast } from "../ui/use-toast";
 
 function SignupForm() {
-  // show or hide password state
   const [showPassword, setShowPassword] = useState(false);
-  function _showPassword() {
-    setShowPassword(!showPassword);
-  }
-
-  // use router to navigate to login page after successful sign in
-  const router = useRouter();
-
-  // error message
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  // handle form state
+  const router = useRouter();
   const form = useForm();
   const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  const { toast } = useToast();
 
-  //
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setSuccessMessage("Account created successfully!");
+      setErrorMessage("");
+    }
+  }, [isSubmitSuccessful]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
 
   async function onSubmit(data) {
     const formData = {
@@ -64,6 +66,7 @@ function SignupForm() {
 
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
+      <Toaster /> {/* Render the Toaster component here */}
       <header className="flex flex-col items-center justify-center">
         <p>Welcome</p>
         <p>Please sign up to continue</p>
@@ -160,10 +163,6 @@ function SignupForm() {
                   value: true,
                   message: "Password is required",
                 },
-                // pattern: {
-                //   value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-                //   message: "Please enter a stronger password",
-                // },
               }}
               register={register}
             />
@@ -177,7 +176,7 @@ function SignupForm() {
                 className="px-4 py-2"
                 name="show_password_checkbox"
                 id="show_password_checkbox"
-                onClick={_showPassword}
+                onClick={showPassword}
               />
               <label
                 htmlFor="show_password_checkbox"
