@@ -21,11 +21,29 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         const { email, password } = credentials;
         if (email === "kwabs@dev.com" && password === "1234") {
-          return { id: "1", username: "kwabs", email };
+          return { id: "1", name: "kwabs", email };
         } else {
           return null;
         }
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.email = user.email;
+        token.name = user.name;
+      }
+
+      return token;
+    },
+    session: async ({ token, session, user }) => {
+      if (token) {
+        session.user.email = token.email;
+        session.user.name = token.name;
+      }
+
+      return session;
+    },
+  },
 };
