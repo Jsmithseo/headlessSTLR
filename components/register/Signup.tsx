@@ -25,6 +25,7 @@ function SignupForm() {
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
   const { toast } = useToast();
 
+  //handle form state
   useEffect(() => {
     if (isSubmitSuccessful) {
       setSuccessMessage("Account created successfully!");
@@ -32,6 +33,7 @@ function SignupForm() {
     }
   }, [isSubmitSuccessful]);
 
+  //handle toast message
   useEffect(() => {
     if (successMessage) {
       toast({
@@ -40,6 +42,7 @@ function SignupForm() {
     }
   }, [toast, successMessage]);
 
+  //form submission
   async function onSubmit(data) {
     const formData = {
       firstname: data.firstname,
@@ -62,6 +65,11 @@ function SignupForm() {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  //handle show password
+  function _showPassword() {
+    setShowPassword(!showPassword);
   }
 
   return (
@@ -176,7 +184,7 @@ function SignupForm() {
                 className="px-4 py-2"
                 name="show_password_checkbox"
                 id="show_password_checkbox"
-                onClick={showPassword}
+                onClick={_showPassword}
               />
               <label
                 htmlFor="show_password_checkbox"
