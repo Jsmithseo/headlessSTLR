@@ -198,7 +198,10 @@ function SignupForm() {
               <p className="text-sm">Must be at least 8 characters</p>
             </div>
           </InputContainer>
-          <Button className={`bg-burgendy font-bold leading-6 text-white`}>
+          <Button
+            className={`bg-burgendy font-bold leading-6 text-white`}
+            disabled={isSubmitting}
+          >
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
