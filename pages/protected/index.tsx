@@ -1,5 +1,5 @@
 "use client";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import { Button } from "../../components/ui/button";
 
 function ProtectedRoute() {
@@ -13,12 +13,23 @@ function ProtectedRoute() {
   return (
     <>
       {session ? (
-        <div>
+        <div className="h-screen flex items-center justify-center">
           Hello and welcome {session.user.name}
-          <Button onClick={() => signOut()}>Sign out</Button>
+          <Button onClick={() => signOut()} className="mx-10">
+            Sign out
+          </Button>
         </div>
       ) : (
-        <p>Please sign in</p>
+        <div>
+          <p>This route is protected. Please sign in</p>
+          <Button
+            onClick={() => {
+              signIn;
+            }}
+          >
+            Sign in{" "}
+          </Button>
+        </div>
       )}
     </>
   );
