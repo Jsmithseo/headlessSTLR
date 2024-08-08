@@ -5,6 +5,7 @@ import Button from "../button";
 import { Separator } from "../../components/ui/separator";
 import { LoadingSpinner } from "../../components/ui/loading-spinner";
 import { useToast } from "../../components/ui/use-toast";
+import { Toaster } from "../ui/toaster";
 
 import Input from "../../components/input";
 import InputContainer from "../../components/inputContainer";
@@ -61,7 +62,9 @@ function LoginForm() {
         setloginSuccess(true);
 
         setSuccessMessage("Login Successfull");
-        router.push(callbackUrl);
+        setTimeout(() => {
+          router.push(callbackUrl);
+        }, 3000);
       } else {
         setErrorMessage("Invalid credentials");
       }
@@ -84,6 +87,7 @@ function LoginForm() {
 
   return (
     <div className="form-container flex  flex-col items-center justify-center gap-4 h-screen">
+      <Toaster />
       <header className="">
         <p>Welcome</p>
         <p>Please sign in to continue</p>
@@ -198,7 +202,7 @@ function LoginForm() {
           {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <Button
             className="bg-burgendy font-bold leading-6 text-white"
-            disabled={isSubmitting}
+            disabled={isSubmitting || successMessage}
           >
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
