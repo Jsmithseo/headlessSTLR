@@ -2,16 +2,6 @@ import credentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 import { _getUserByEmail } from "../../../../models/user.model";
 
-interface UserData {
-  id: string;
-  data: {
-    lastname: string;
-    firstname: string;
-    email: string;
-    password: string;
-  };
-}
-
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -31,7 +21,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials;
-        const userData: UserData = await _getUserByEmail(email);
+        const userData = await _getUserByEmail(email);
         const user = userData.data;
         console.log(user);
 
