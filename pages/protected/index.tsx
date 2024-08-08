@@ -15,7 +15,10 @@ function ProtectedRoute() {
       {session ? (
         <div className="h-screen flex items-center justify-center">
           Hello and welcome {session.user.name}
-          <Button onClick={() => signOut()} className="mx-10">
+          <Button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="mx-10"
+          >
             Sign out
           </Button>
         </div>

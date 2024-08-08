@@ -1,5 +1,16 @@
 import credentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
+import { _getUserByEmail } from "../../../../models/user.model";
+
+interface UserData {
+  id: string;
+  data: {
+    lastname: string;
+    firstname: string;
+    email: string;
+    password: string;
+  };
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -20,8 +31,16 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials;
-        if (email === "kwabs@dev.com" && password === "1234") {
-          return { id: "1", name: "kwabs", email };
+        const userData: UserData = await _getUserByEmail(email);
+        const user = userData.data;
+        console.log(user);
+
+        if (email === user.email && password === user.password) {
+          return {
+            id: userData.id,
+            name: user.firstname + " " + user.lastname,
+            email: user.email,
+          };
         } else {
           return null;
         }

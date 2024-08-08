@@ -1,6 +1,16 @@
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 
+interface UserData {
+  id: string;
+  data: {
+    lastname: string;
+    firstname: string;
+    email: string;
+    password: string;
+  };
+}
+
 // get all users
 export async function getAllUsers() {
   try {
@@ -16,7 +26,7 @@ export async function getAllUsers() {
 }
 
 //get user with email
-export async function _getUserByEmail(email) {
+export async function _getUserByEmail(email: string): Promise<UserData> {
   try {
     const q = query(collection(db, "users"), where("email", "==", email));
     const querySnapshot = await getDocs(q);

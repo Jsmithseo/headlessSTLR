@@ -31,7 +31,7 @@ function LoginForm() {
   const router = useRouter();
 
   //callbackUrl
-  const callbackUrl = decodeURI(router.query?.callbackUrl ?? "/profile");
+  const callbackUrl = decodeURI(router.query?.callbackUrl ?? "/protected");
 
   const form = useForm();
 
@@ -50,12 +50,13 @@ function LoginForm() {
     const loginData = {
       email: data.email,
       password: data.password,
-      callbackUrl: callbackUrl ?? "/profile",
+      callbackUrl: callbackUrl ?? "/protected",
       redirect: false,
     };
     try {
       const result = await signIn("credentials", loginData);
-      console.log(result);
+      // console.log(loginData);
+      // console.log(result);
       if (result?.ok) {
         setloginSuccess(true);
 
