@@ -1,20 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Button from "./button";
+import Button from "../button";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 import { Separator } from "../ui/separator";
-import Input from "./input";
-import InputContainer from "./inputContainer";
-import Label from "./label";
+import Input from "../input";
+import InputContainer from "../inputContainer";
+import Label from "../label";
 import { useForm } from "react-hook-form";
-import ErrorMessage from "./errorMessage";
+import ErrorMessage from "../errorMessage";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { _createNewUser } from "../../models/user.model";
 import { Toaster } from "../../components/ui/toaster";
 import { useToast } from "../ui/use-toast";
-
+import { signIn } from "next-auth/react";
 function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -90,9 +91,26 @@ function SignupForm() {
           }}
         >
           <aside className="flex flex-col gap-4">
-            <Button className="hover:bg-gray-3 w-full hover:bg-gray-100">
+            <Button
+              className="hover:bg-gray-3 w-full hover:bg-gray-100"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              disabled={isSubmitting}
+            >
               <FcGoogle />
               <p>Sign up with Google</p>
+            </Button>
+            <Button
+              className="hover:bg-gray-3 w-full hover:bg-gray-100"
+              onClick={(e) => {
+                e.preventDefault();
+                signIn("github");
+              }}
+              disabled={isSubmitting}
+            >
+              <FaGithub />
+              <p>Sign in with GitHub</p>
             </Button>
             <div
               id="separator"
