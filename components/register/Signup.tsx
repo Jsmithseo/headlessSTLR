@@ -68,10 +68,14 @@ function SignupForm() {
     }
   }
 
-  //handle show password
-  function _showPassword() {
-    setShowPassword(!showPassword);
-  }
+  const { toast } = useToast();
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
 
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
@@ -93,10 +97,8 @@ function SignupForm() {
           <aside className="flex flex-col gap-4">
             <Button
               className="hover:bg-gray-3 w-full hover:bg-gray-100"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              disabled={isSubmitting}
+              onClick={onclick}
+              disabled={true}
             >
               <FcGoogle />
               <p>Sign up with Google</p>
@@ -122,7 +124,7 @@ function SignupForm() {
           </aside>
           <InputContainer className="gap-3">
             <div>
-              <Label>First name*</Label>
+              <label>First name*</label>
               <Input
                 placeholder="Enter your first name"
                 name="firstname"
