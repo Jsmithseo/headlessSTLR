@@ -159,3 +159,23 @@ query GetPageByUri($uri: String!) {
   }
 }
 `
+
+export const HOMEPAGE_IMAGE = `
+{
+  nodeByUri(uri: "/") {
+    ... on Page {
+      featuredImage {
+        node {
+          description 
+          sourceUrl
+          mediaDetails {
+        	 width 
+        	 height 
+         	 file 
+          }
+        }
+      }
+    }
+  }
+}
+`

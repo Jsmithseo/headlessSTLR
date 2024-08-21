@@ -3,6 +3,7 @@ import { GET_ALL_POSTS_WITH_SLUG } from "./queries";
 import { GET_ALL_POSTS_FOR_HOME } from "./queries";
 import { POST_BY_SLUG_QUERY } from "./queries";
 import { GET_HOMEPAGE_BY_URI } from "./queries";
+import { HOMEPAGE_IMAGE } from "./queries";
 import { simpleHash } from "./utils"; // imported a new function to generate a hash 
 
 const API_URL = process.env.WORDPRESS_API_URL;
@@ -13,6 +14,7 @@ const QUERY_MAP = {
   GET_ALL_POSTS_FOR_HOME,
   GET_POST_BY_SLUG: POST_BY_SLUG_QUERY,
   GET_HOMEPAGE_BY_URI,
+  HOMEPAGE_IMAGE
 };
 
 const cache = {};
@@ -127,5 +129,10 @@ export async function getPageByUri(uri: string) {
   const data = await fetchAPI("GET_HOMEPAGE_BY_URI", {
     uri ,
   });
+  return data?.nodeByUri;
+}
+
+export async function getPageImage (uri) {
+  const data = await fetchAPI("HOMEPAGE_IMAGE", { uri });
   return data?.nodeByUri;
 }

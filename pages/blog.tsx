@@ -3,6 +3,7 @@ import { GetStaticProps } from "next";
 import Container from "../components/container";
 import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
+import FeaturedImage from "../components/featuredImage";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
 import { getAllPostsForHome, getPageByUri } from "../lib/api";
@@ -20,6 +21,7 @@ export default function Index({ allPosts: { edges }, preview, pageContent}) {
         <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
       </Head>
       <Container>
+      <FeaturedImage image={pageContent.featuredImage} />
         <Intro />
         {pageContent && (
           <div>
@@ -28,6 +30,7 @@ export default function Index({ allPosts: { edges }, preview, pageContent}) {
             {pageContent.featuredImage && (
               <img src={pageContent.featuredImage.node.sourceUrl} alt={pageContent.title} />
             )}
+
           </div>
         )}
         {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
