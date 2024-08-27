@@ -77,6 +77,10 @@ function SignupForm() {
     }
   }, [toast, successMessage]);
 
+
+  
+
+
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
       <Toaster /> {/* Render the Toaster component here */}
