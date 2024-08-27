@@ -16,6 +16,7 @@ import { _createNewUser } from "../../models/user.model";
 import { Toaster } from "../../components/ui/toaster";
 import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
+
 function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,26 +25,19 @@ function SignupForm() {
   const form = useForm();
   const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
+
   const { toast } = useToast();
 
-  //handle form state
   useEffect(() => {
     if (isSubmitSuccessful) {
       setSuccessMessage("Account created successfully!");
       setErrorMessage("");
+      toast({
+        description: "Account created successfully!",
+      });
     }
   }, [isSubmitSuccessful]);
 
-  //handle toast message
-  useEffect(() => {
-    if (successMessage) {
-      toast({
-        description: successMessage,
-      });
-    }
-  }, [toast, successMessage]);
-
-  //form submission
   async function onSubmit(data) {
     const formData = {
       firstname: data.firstname,
@@ -61,25 +55,20 @@ function SignupForm() {
         setErrorMessage(response.error);
       } else {
         setSuccessMessage(response.message);
+        toast({
+          description: response.message,
+        });
       }
       console.log(response);
     } catch (error) {
       console.log(error);
+      setErrorMessage("An error occurred. Please try again.");
     }
   }
 
-  const { toast } = useToast();
-  useEffect(() => {
-    if (successMessage) {
-      toast({
-        description: successMessage,
-      });
-    }
-  }, [toast, successMessage]);
-
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
-      <Toaster /> {/* Render the Toaster component here */}
+      <Toaster />
       <header className="flex flex-col items-center justify-center">
         <p>Welcome</p>
         <p>Please sign up to continue</p>
@@ -97,8 +86,8 @@ function SignupForm() {
           <aside className="flex flex-col gap-4">
             <Button
               className="hover:bg-gray-3 w-full hover:bg-gray-100"
-              onClick={onclick}
-              disabled={true}
+              onClick={() => signIn("google")}
+              disabled={isSubmitting}
             >
               <FcGoogle />
               <p>Sign up with Google</p>
@@ -124,8 +113,11 @@ function SignupForm() {
           </aside>
           <InputContainer className="gap-3">
             <div>
-              <label>First name*</label>
+              <Label htmlFor="firstname" className="label-class">First name*</Label>
               <Input
+                type="text"
+                id="firstname"
+                className="form-input"
                 placeholder="Enter your first name"
                 name="firstname"
                 validation={{
@@ -141,8 +133,11 @@ function SignupForm() {
               )}
             </div>
             <div>
-              <Label>Lastname*</Label>
+              <Label htmlFor="lastname" className="label-class">Lastname*</Label>
               <Input
+                type="text"
+                id="lastname"
+                className="form-input"
                 placeholder="Enter your last name"
                 name="lastname"
                 validation={{
@@ -160,8 +155,11 @@ function SignupForm() {
           </InputContainer>
 
           <InputContainer className="flex-col gap-1">
-            <Label>Email*</Label>
+            <Label htmlFor="email" className="label-class">Email*</Label>
             <Input
+              type="email"
+              id="email"
+              className="form-input"
               placeholder="Enter your email"
               name="email"
               validation={{
@@ -174,17 +172,18 @@ function SignupForm() {
                   message: "Please enter a valid email",
                 },
               }}
-              register={register}
-            />
+              register={register} value={undefined}            />
             {errors.email && (
               <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
           </InputContainer>
           <InputContainer className="flex-col gap-1">
-            <Label>Password*</Label>
+            <Label htmlFor="password" className="label-class">Password*</Label>
             <Input
-              placeholder="create a password"
+              placeholder="Create a password"
               type={showPassword ? "text" : "password"}
+              id="password"
+              className="form-input"
               name="password"
               validation={{
                 required: {
@@ -204,14 +203,14 @@ function SignupForm() {
                 className="px-4 py-2"
                 name="show_password_checkbox"
                 id="show_password_checkbox"
-                onClick={_showPassword}
+                onClick={() => setShowPassword(!showPassword)}
               />
-              <label
+              <Label
                 htmlFor="show_password_checkbox"
                 className="text-sm font-normal"
               >
                 Show password
-              </label>
+              </Label>
             </div>
             {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <div>
@@ -220,12 +219,11 @@ function SignupForm() {
           </InputContainer>
           <Button
             className={`bg-burgendy font-bold leading-6 text-white`}
-            disabled={isSubmitting}
-          >
+            disabled={isSubmitting} children={undefined} onClick={undefined}>
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
-              "create account"
+              "Create account"
             )}
           </Button>
         </form>
@@ -234,7 +232,6 @@ function SignupForm() {
         <p>
           Already got an account?{" "}
           <Link href="/login" className="text-burgendy underline">
-            {" "}
             login
           </Link>
         </p>
