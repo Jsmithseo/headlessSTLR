@@ -3,12 +3,15 @@ import { GetStaticProps } from "next";
 import Container from "../components/container";
 import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
+import FeaturedImage from "../components/featuredImage";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
-import { getAllPostsForHome } from "../lib/api";
+import { getAllPostsForHome, getPageByUri } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
+import { url } from "inspector";
 
-export default function Index({ allPosts: { edges }, preview }) {
+
+export default function Index({ allPosts: { edges }, preview, pageContent}) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
 
@@ -18,20 +21,31 @@ export default function Index({ allPosts: { edges }, preview }) {
         <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
       </Head>
       <Container>
+      <FeaturedImage image={pageContent.featuredImage} />
         <Intro />
+        {pageContent && (
+          <div>
+            <h2>{pageContent.title}</h2>
+            <div dangerouslySetInnerHTML={{ __html: pageContent.content }} />
+            {pageContent.featuredImage && (
+              <img src={pageContent.featuredImage.node.sourceUrl} alt={pageContent.title} />
+            )}
 
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        <div>this is more content</div>
+          </div>
+        )}
+        {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
       </Container>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+  const uri = '/';
   const allPosts = await getAllPostsForHome(preview);
+  const pageContent = await getPageByUri(uri)
 
   return {
-    props: { allPosts, preview },
+    props: { allPosts, pageContent, preview },
     revalidate: 10,
   };
 };
