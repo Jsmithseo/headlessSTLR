@@ -33,16 +33,6 @@ function SignupForm() {
     }
   }, [isSubmitSuccessful]);
 
-  //handle toast message
-  const { toast } = useToast();
-  useEffect(() => {
-    if (successMessage) {
-      toast({
-        description: successMessage,
-      });
-    }
-  }, [toast, successMessage]);
-
   //form submission
   async function onSubmit(data) {
     const formData = {
@@ -73,6 +63,15 @@ function SignupForm() {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
+  //handle toast message
+  const { toast } = useToast();
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
 
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
@@ -222,10 +221,7 @@ function SignupForm() {
                 id="showPassword"
                 onClick={handleShowPassword}
               />
-              <label
-                htmlFor="show_password_checkbox"
-                className="text-sm font-normal"
-              >
+              <label htmlFor="showPassword" className="text-sm font-normal">
                 Show password
               </label>
             </div>
