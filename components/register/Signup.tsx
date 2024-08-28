@@ -44,7 +44,8 @@ function SignupForm() {
   }, [toast, successMessage]);
 
   //form submission
-  async function onSubmit(data) {
+  async function onSubmit(data, e) {
+    e.preventDefault();
     const formData = {
       firstname: data.firstname,
       lastname: data.lastname,
@@ -235,9 +236,7 @@ function SignupForm() {
             </div>
           </InputContainer>
           <Button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
+            onClick={() => {}}
             className={`bg-burgendy font-bold leading-6 text-white`}
             disabled={isSubmitting}
           >
