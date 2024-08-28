@@ -54,13 +54,13 @@ function SignupForm() {
         setSuccessMessage(response.message);
       }
       console.log(response);
+      reset();
     } catch (error) {
       console.log(error);
     }
   }
 
-  const handleShowPassword = (e) => {
-    e.preventDefault();
+  const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   //handle toast message
@@ -219,7 +219,7 @@ function SignupForm() {
                 type="checkbox"
                 name="showPassword"
                 id="showPassword"
-                onClick={handleShowPassword}
+                onChange={handleShowPassword}
               />
               <label htmlFor="showPassword" className="text-sm font-normal">
                 Show password
@@ -231,9 +231,7 @@ function SignupForm() {
             </div>
           </InputContainer>
           <Button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
+            onClick={() => {}}
             className={`bg-burgendy font-bold leading-6 text-white`}
             disabled={isSubmitting}
           >
