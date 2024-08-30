@@ -51,7 +51,7 @@ function LoginForm() {
     const loginData = {
       email: data.email,
       password: data.password,
-      callbackUrl: callbackUrl ?? "/protected",
+      callbackUrl: callbackUrl ?? "/profile",
       redirect: false,
     };
     try {
