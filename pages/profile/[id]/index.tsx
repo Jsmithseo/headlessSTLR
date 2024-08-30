@@ -46,6 +46,7 @@ function ProtectedRoute() {
           >
             Sign in
           </Button>
+          <Button>Create EPK</Button>
         </div>
       )}
     </>
