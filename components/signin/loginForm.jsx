@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,10 +29,9 @@ function LoginForm() {
   }
 
   //useRouter to get route definitions
+  const { data: session } = useSession();
+  console.log(session);
   const router = useRouter();
-
-  //callbackUrl
-  const callbackUrl = decodeURI(router.query?.callbackUrl ?? "/protected");
 
   const form = useForm();
 
@@ -48,16 +47,22 @@ function LoginForm() {
   //router to navigate programatically on successful login
   // const router = useRouter();
   async function onSubmit(data) {
+    //callbackUrl
+    const callbackUrl = decodeURI(
+      router.query?.callbackUrl ?? `/profile/${session.user.id}`
+    );
+
+    console.log(callbackUrl);
     const loginData = {
       email: data.email,
       password: data.password,
-      callbackUrl: callbackUrl ?? "/profile",
+      callbackUrl: callbackUrl,
       redirect: false,
     };
     try {
       const result = await signIn("credentials", loginData);
       // console.log(loginData);
-      // console.log(result);
+      console.log(result);
       if (result?.ok) {
         setloginSuccess(true);
 
