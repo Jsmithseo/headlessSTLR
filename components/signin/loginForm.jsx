@@ -14,7 +14,7 @@ import ErrorMessage from "../errorMessage";
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 import { FaGithub } from "react-icons/fa";
@@ -28,10 +28,15 @@ function LoginForm() {
     setShowPassword(!showPassword);
   }
 
-  //useRouter to get route definitions
-  const { data: session } = useSession();
-  console.log(session);
+  //useSession to get user status and session data then useRouter to get route definitions
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.id) {
+      router.push(`/profile/${session.user.id}`);
+    }
+  }, [status, session]);
 
   const form = useForm();
 
@@ -47,16 +52,9 @@ function LoginForm() {
   //router to navigate programatically on successful login
   // const router = useRouter();
   async function onSubmit(data) {
-    //callbackUrl
-    const callbackUrl = decodeURI(
-      router.query?.callbackUrl ?? `/profile/${session.user.id}`
-    );
-
-    console.log(callbackUrl);
     const loginData = {
       email: data.email,
       password: data.password,
-      callbackUrl: callbackUrl,
       redirect: false,
     };
     try {
@@ -65,11 +63,7 @@ function LoginForm() {
       console.log(result);
       if (result?.ok) {
         setloginSuccess(true);
-
         setSuccessMessage("Login Successfull");
-        setTimeout(() => {
-          router.push(callbackUrl);
-        }, 3000);
       } else {
         setErrorMessage("Invalid credentials");
       }
@@ -131,23 +125,6 @@ function LoginForm() {
               <Separator className="w-48" />
             </div>
           </aside>
-          {/* <InputContainer className="flex-col gap-1">
-            <Label>Username*</Label>
-            <Input
-              placeholder="Enter your username"
-              name="username"
-              validation={{
-                required: {
-                  value: true,
-                  message: "Username is required",
-                },
-              }}
-              register={register}
-            />
-            {errors.username && (
-              <ErrorMessage>{errors.username.message}</ErrorMessage>
-            )}
-          </InputContainer> */}
 
           <InputContainer className="flex-col gap-1">
             <Label>Email*</Label>
