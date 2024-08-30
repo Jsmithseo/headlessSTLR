@@ -44,7 +44,6 @@ function LoginForm() {
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
 
   //states for server messages
-
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setloginSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
