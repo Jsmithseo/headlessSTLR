@@ -9,36 +9,43 @@ import InputContainer from "../inputContainer";
 import Label from "../label";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../errorMessage";
-import { useRouter } from "next/navigation";
+
 import Link from "next/link";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { _createNewUser } from "../../models/user.model";
 import { Toaster } from "../../components/ui/toaster";
 import { useToast } from "../ui/use-toast";
 import { signIn } from "next-auth/react";
-
 function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const router = useRouter();
+
   const form = useForm();
   const { register, handleSubmit, formState, reset } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
 
-  const { toast } = useToast();
-
+  //handle form state
   useEffect(() => {
     if (isSubmitSuccessful) {
       setSuccessMessage("Account created successfully!");
       setErrorMessage("");
-      toast({
-        description: "Account created successfully!",
-      });
     }
   }, [isSubmitSuccessful]);
 
-  async function onSubmit(data) {
+  //handle toast message
+  const { toast } = useToast();
+  useEffect(() => {
+    if (successMessage) {
+      toast({
+        description: successMessage,
+      });
+    }
+  }, [toast, successMessage]);
+
+  //form submission
+  async function onSubmit(data, e) {
+    e.preventDefault();
     const formData = {
       firstname: data.firstname,
       lastname: data.lastname,
@@ -51,20 +58,22 @@ function SignupForm() {
 
     try {
       const response = await _createNewUser(formData);
+
       if (response.error) {
         setErrorMessage(response.error);
       } else {
         setSuccessMessage(response.message);
-        toast({
-          description: response.message,
-        });
       }
       console.log(response);
     } catch (error) {
       console.log(error);
-      setErrorMessage("An error occurred. Please try again.");
     }
   }
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
@@ -86,7 +95,10 @@ function SignupForm() {
           <aside className="flex flex-col gap-4">
             <Button
               className="hover:bg-gray-3 w-full hover:bg-gray-100"
-              onClick={() => signIn("google")}
+              onClick={(e) => {
+                e.preventDefault();
+                signIn("google");
+              }}
               disabled={isSubmitting}
             >
               <FcGoogle />
@@ -113,13 +125,13 @@ function SignupForm() {
           </aside>
           <InputContainer className="gap-3">
             <div>
-              <Label htmlFor="firstname" className="label-class">First name*</Label>
+              <label>First name*</label>
               <Input
-                type="text"
-                id="firstname"
-                className="form-input"
                 placeholder="Enter your first name"
                 name="firstname"
+                type="text"
+                id="firstname"
+                className=""
                 validation={{
                   required: {
                     value: true,
@@ -133,11 +145,10 @@ function SignupForm() {
               )}
             </div>
             <div>
-              <Label htmlFor="lastname" className="label-class">Lastname*</Label>
+              <Label htmlFor="lastname" className="">
+                Lastname*
+              </Label>
               <Input
-                type="text"
-                id="lastname"
-                className="form-input"
                 placeholder="Enter your last name"
                 name="lastname"
                 validation={{
@@ -146,6 +157,9 @@ function SignupForm() {
                     message: "Last name is required",
                   },
                 }}
+                type="text"
+                className=""
+                id="lastname"
                 register={register}
               />
               {errors.lastname && (
@@ -155,11 +169,13 @@ function SignupForm() {
           </InputContainer>
 
           <InputContainer className="flex-col gap-1">
-            <Label htmlFor="email" className="label-class">Email*</Label>
+            <Label htmlFor="email" className="">
+              Email*
+            </Label>
             <Input
-              type="email"
               id="email"
-              className="form-input"
+              className=""
+              type="email"
               placeholder="Enter your email"
               name="email"
               validation={{
@@ -172,18 +188,21 @@ function SignupForm() {
                   message: "Please enter a valid email",
                 },
               }}
-              register={register} value={undefined}            />
+              register={register}
+            />
             {errors.email && (
               <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
           </InputContainer>
           <InputContainer className="flex-col gap-1">
-            <Label htmlFor="password" className="label-class">Password*</Label>
+            <Label htmlFor="password" className="">
+              Password*
+            </Label>
             <Input
-              placeholder="Create a password"
-              type={showPassword ? "text" : "password"}
               id="password"
-              className="form-input"
+              className=""
+              placeholder="create a password"
+              type={showPassword ? "text" : "password"}
               name="password"
               validation={{
                 required: {
@@ -200,17 +219,16 @@ function SignupForm() {
             <div className="flex flex-row gap-2">
               <input
                 type="checkbox"
-                className="px-4 py-2"
-                name="show_password_checkbox"
-                id="show_password_checkbox"
-                onClick={() => setShowPassword(!showPassword)}
+                name="showPassword"
+                id="showPassword"
+                onClick={handleShowPassword}
               />
-              <Label
+              <label
                 htmlFor="show_password_checkbox"
                 className="text-sm font-normal"
               >
                 Show password
-              </Label>
+              </label>
             </div>
             {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <div>
@@ -218,12 +236,14 @@ function SignupForm() {
             </div>
           </InputContainer>
           <Button
+            onClick={() => {}}
             className={`bg-burgendy font-bold leading-6 text-white`}
-            disabled={isSubmitting} children={undefined} onClick={undefined}>
+            disabled={isSubmitting}
+          >
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
-              "Create account"
+              "create account"
             )}
           </Button>
         </form>
@@ -232,6 +252,7 @@ function SignupForm() {
         <p>
           Already got an account?{" "}
           <Link href="/login" className="text-burgendy underline">
+            {" "}
             login
           </Link>
         </p>
