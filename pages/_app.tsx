@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import "../styles/index.css";
 import { useEffect } from "react";
+import React from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const fetchCSS = async () => {

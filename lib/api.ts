@@ -23,9 +23,7 @@ async function fetchAPI(queryKey: keyof typeof QUERY_MAP, variables: Record<stri
   const headers = { "Content-Type": "application/json" };
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
-    headers[
-      "Authorization"
-    ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
+    headers["Authorization"] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
   const query = QUERY_MAP[queryKey];
@@ -36,10 +34,14 @@ async function fetchAPI(queryKey: keyof typeof QUERY_MAP, variables: Record<stri
 
   const queryHash = simpleHash(typeof query === 'function' ? query(variables.isRevision) : query);
 
+  if (cache[queryHash]) {
+    return cache[queryHash];
+  }
 
-if (cache[queryHash]){
-  return cache[queryHash]
-}
+  if (!API_URL) {
+    throw new Error('API_URL is not defined');
+  }
+
   const res = await fetch(API_URL, {
     headers,
     method: "POST",
@@ -54,9 +56,12 @@ if (cache[queryHash]){
     console.error(json.errors);
     throw new Error("Failed to fetch API");
   }
-  cache[queryHash] = json.data; 
+  cache[queryHash] = json.data;
   return json.data;
 }
+
+
+
 
 export async function getPreviewPost(id, idType = "DATABASE_ID") {
   const data = await fetchAPI(

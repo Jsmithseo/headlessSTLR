@@ -9,6 +9,7 @@ import Layout from "../components/layout";
 import { getAllPostsForHome, getPageByUri } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
 import { url } from "inspector";
+import React from "react";
 
 
 export default function Index({ allPosts: { edges }, preview, pageContent}) {
@@ -27,13 +28,12 @@ export default function Index({ allPosts: { edges }, preview, pageContent}) {
           <div>
             <h2>{pageContent.title}</h2>
             <div dangerouslySetInnerHTML={{ __html: pageContent.content }} />
-            {pageContent.featuredImage && (
+            {/* {pageContent.featuredImage && (
               <img src={pageContent.featuredImage.node.sourceUrl} alt={pageContent.title} />
-            )}
+            )} */}
 
           </div>
         )}
-        {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
       </Container>
     </Layout>
   );
