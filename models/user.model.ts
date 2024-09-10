@@ -43,6 +43,33 @@ export async function _getUserByEmail(email: string): Promise<UserData> {
   }
 }
 
+// get user by id
+export async function _getUserById(id: string): Promise<UserData> {
+  try {
+    const q = query(collection(db, "users"), where("id", "==", id));
+    const querySnapshot = await getDocs(q);
+    let user: UserData = {
+      id: "",
+      data: {
+        lastname: "",
+        firstname: "",
+        email: "",
+        password: "",
+      },
+    };
+
+    querySnapshot.forEach((doc) => {
+      user = {
+        id: doc.id,
+        data: doc.data() as UserData["data"],
+      };
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //create new user
 export async function _createNewUser(userData) {
   try {
@@ -58,6 +85,3 @@ export async function _createNewUser(userData) {
     return { error: error || "An unexpected error occured" };
   }
 }
-
-// edit user
-// delete user to come

@@ -1,16 +1,22 @@
 "use client";
 import { useSession, signOut, signIn } from "next-auth/react";
 import { Button } from "../../../components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
 import stlrLogo from "../../../public/images/stlr-logo-brand-vert-web.webp";
+
+import { useRouter } from "next/router";
 function ProtectedRoute() {
   const { data: session, status } = useSession();
-  console.log(session);
 
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
+  const router = useRouter();
+  const path = router.asPath;
+
+  console.log(router.asPath);
   return (
     <>
       {session ? (
@@ -33,6 +39,9 @@ function ProtectedRoute() {
               >
                 Sign out
               </Button>
+              <Button>
+                <Link href={`${path}/epk`}>Electronic Package Kits</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -46,7 +55,6 @@ function ProtectedRoute() {
           >
             Sign in
           </Button>
-          <Button>Create EPK</Button>
         </div>
       )}
     </>

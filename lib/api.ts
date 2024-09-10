@@ -4,7 +4,7 @@ import { GET_ALL_POSTS_FOR_HOME } from "./queries";
 import { POST_BY_SLUG_QUERY } from "./queries";
 import { GET_HOMEPAGE_BY_URI } from "./queries";
 import { HOMEPAGE_IMAGE } from "./queries";
-import { simpleHash } from "./utils"; // imported a new function to generate a hash 
+import { simpleHash } from "./utils"; // imported a new function to generate a hash
 
 const API_URL = process.env.WORDPRESS_API_URL;
 
@@ -14,12 +14,15 @@ const QUERY_MAP = {
   GET_ALL_POSTS_FOR_HOME,
   GET_POST_BY_SLUG: POST_BY_SLUG_QUERY,
   GET_HOMEPAGE_BY_URI,
-  HOMEPAGE_IMAGE
+  HOMEPAGE_IMAGE,
 };
 
 const cache = {};
 
-async function fetchAPI(queryKey: keyof typeof QUERY_MAP, variables: Record<string, any> = {}) {
+async function fetchAPI(
+  queryKey: keyof typeof QUERY_MAP,
+  variables: Record<string, any> = {}
+) {
   const headers = { "Content-Type": "application/json" };
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
@@ -31,20 +34,21 @@ async function fetchAPI(queryKey: keyof typeof QUERY_MAP, variables: Record<stri
   const query = QUERY_MAP[queryKey];
 
   if (!query) {
-    throw new Error('Query not found');
+    throw new Error("Query not found");
   }
 
-  const queryHash = simpleHash(typeof query === 'function' ? query(variables.isRevision) : query);
+  const queryHash = simpleHash(
+    typeof query === "function" ? query(variables.isRevision) : query
+  );
 
-
-if (cache[queryHash]){
-  return cache[queryHash]
-}
+  if (cache[queryHash]) {
+    return cache[queryHash];
+  }
   const res = await fetch(API_URL, {
     headers,
     method: "POST",
     body: JSON.stringify({
-      query: typeof query === 'function' ? query(variables.isRevision) : query,
+      query: typeof query === "function" ? query(variables.isRevision) : query,
       variables, // Make sure variables are passed correctly
     }),
   });
@@ -54,17 +58,14 @@ if (cache[queryHash]){
     console.error(json.errors);
     throw new Error("Failed to fetch API");
   }
-  cache[queryHash] = json.data; 
+  cache[queryHash] = json.data;
   return json.data;
 }
 
 export async function getPreviewPost(id, idType = "DATABASE_ID") {
-  const data = await fetchAPI(
-    "GET_PREVIEW_POST",
-    {
-      variables: { id, idType },
-    },
-  );
+  const data = await fetchAPI("GET_PREVIEW_POST", {
+    variables: { id, idType },
+  });
   return data.post;
 }
 
@@ -74,15 +75,12 @@ export async function getAllPostsWithSlug() {
 }
 
 export async function getAllPostsForHome(preview) {
-  const data = await fetchAPI(
-    "GET_ALL_POSTS_FOR_HOME",
-    {
-      variables: {
-        onlyEnabled: !preview,
-        preview,
-      },
+  const data = await fetchAPI("GET_ALL_POSTS_FOR_HOME", {
+    variables: {
+      onlyEnabled: !preview,
+      preview,
     },
-  );
+  });
 
   return data?.posts;
 }
@@ -97,15 +95,12 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   const isDraft = isSamePost && postPreview?.status === "draft";
   const isRevision = isSamePost && postPreview?.status === "publish";
   const query = POST_BY_SLUG_QUERY(isRevision);
-  const data = await fetchAPI(
-    "GET_POST_BY_SLUG",
-    {
-      variables: {
-        id: isDraft ? postPreview.id : slug,
-        idType: isDraft ? "DATABASE_ID" : "SLUG",
-      },
+  const data = await fetchAPI("GET_POST_BY_SLUG", {
+    variables: {
+      id: isDraft ? postPreview.id : slug,
+      idType: isDraft ? "DATABASE_ID" : "SLUG",
     },
-  );
+  });
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
@@ -127,12 +122,12 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
 
 export async function getPageByUri(uri: string) {
   const data = await fetchAPI("GET_HOMEPAGE_BY_URI", {
-    uri ,
+    uri,
   });
   return data?.nodeByUri;
 }
 
-export async function getPageImage (uri) {
+export async function getPageImage(uri) {
   const data = await fetchAPI("HOMEPAGE_IMAGE", { uri });
   return data?.nodeByUri;
 }
