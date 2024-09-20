@@ -3,7 +3,7 @@ import { db } from "../config/firebase";
 import { _getUserByEmail } from "./user.model";
 import { collection, addDoc } from "firebase/firestore";
 
-export async function postEPK(data: epkData) {
+export async function _postEPK(data: epkData) {
   try {
     const docRef = await addDoc(
       collection(db, "electronic-package-kits"),

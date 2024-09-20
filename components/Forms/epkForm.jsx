@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Input from "../FormElements/Input";
-import TextArea from "../FormElements/TextArea";
+import { _postEPK } from "../../models/epk.model";
+import Button from "../button";
 
-import { Textarea } from "../ui/textarea";
 function EpkForm() {
   const form = useForm();
   const {
@@ -12,8 +12,8 @@ function EpkForm() {
     formState: { errors },
   } = form;
 
-  const processForm = (data) => {
-    const EpkForm = {
+  const processForm = async (data) => {
+    const epkForm = {
       bio: data.bio,
       discovery: data.discovery,
       streamingPlatforms: {
@@ -28,11 +28,21 @@ function EpkForm() {
         website: data.website,
       },
     };
-    console.log(EpkForm);
+    console.log(epkForm);
+    try {
+      const response = await _postEPK(epkForm);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
-    <div className="w-full flex items-center self-center">
-      <form onSubmit={handleSubmit(processForm)}>
+    <div className="w-full flex items-center  justify-center">
+      <form
+        onSubmit={handleSubmit(processForm)}
+        className="flex flex-col gap-4"
+      >
         <div>
           <label htmlFor="bio">Bio</label>
           <textarea
@@ -41,7 +51,6 @@ function EpkForm() {
             type="text"
             rows={3}
             cols={40}
-            placeholder="bio"
             {...register("bio", { required: true })}
             className="flex h-10 w-full items-center overflow-clip rounded-lg border border-gray-200 text-base outline duration-150 outline-none bg-gray-100"
             errors={errors}
@@ -143,7 +152,7 @@ function EpkForm() {
           </div>
         </div>
 
-        <button>submit</button>
+        <Button className="flex flex-row gap-2 bg-black">submit</Button>
       </form>
     </div>
   );
