@@ -1,5 +1,6 @@
 import { AppProps } from "next/app";
 import "../styles/index.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { SessionProvider } from "next-auth/react";
 
 

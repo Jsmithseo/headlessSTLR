@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
       <h1>Dashboard Overview</h1>
-      <Row>
+      <Row class="flex flex-row">
         <Col sm="4">
           <Card>
             <CardBody>
