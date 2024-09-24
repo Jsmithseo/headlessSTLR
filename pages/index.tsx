@@ -9,6 +9,8 @@ import { getAllPostsForHome } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
 import RegisterLink from "../components/register/register-link";
 import { Toaster } from "../components/ui/toaster";
+import { Button } from 'reactstrap';
+import Link from 'next/link';
 
 export default function Index({ allPosts: { edges }, preview }) {
   const heroPost = edges[0]?.node;
@@ -32,6 +34,9 @@ export default function Index({ allPosts: { edges }, preview }) {
           <RegisterLink href="/protected" className="mx-10">
             visit protected route
           </RegisterLink>
+	  <Link href="/dashboard">
+	  <Button color="primary">Go to Dashboard</Button>
+	  </Link>
         </div>
       </Container>
     </Layout>
