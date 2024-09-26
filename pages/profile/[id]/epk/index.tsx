@@ -23,10 +23,10 @@ export default function EPK() {
   return (
     <div className="w-screen h-screen flex flex-col gap-12 items-center ">
       <header className="w-full p-14">
-        <Button className="flex flex-row gap-2 bg-gray-300">
+        <button className="flex flex-row gap-2 bg-gray-300 p-2 rounded-md">
           <ChevronLeft />
           Back
-        </Button>
+        </button>
       </header>
       <EpkForm />
     </div>

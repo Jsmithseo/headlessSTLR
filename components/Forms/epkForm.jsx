@@ -49,8 +49,8 @@ function EpkForm() {
             id="bio"
             name="bio"
             type="text"
-            rows={3}
-            cols={40}
+            rows={10}
+            cols={10}
             {...register("bio", { required: true })}
             className="flex h-10 w-full items-center overflow-clip rounded-lg border border-gray-200 text-base outline duration-150 outline-none bg-gray-100"
             errors={errors}
