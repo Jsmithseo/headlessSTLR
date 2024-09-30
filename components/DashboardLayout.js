@@ -26,6 +26,11 @@ const DashboardLayout = ({ children }) => {
                 Settings
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href="/dashboard/epk" className="text-white">
+                Electronic Package Kit
+              </NavLink>
+            </NavItem>
           </Nav>
         </Col>
         {/* Main Content */}

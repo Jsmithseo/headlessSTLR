@@ -4,7 +4,7 @@ import { Card, CardBody, CardTitle, CardText, Row, Col } from "reactstrap";
 const Dashboard = () => {
   return (
     <DashboardLayout>
-      <h1 className="text-white">Dashboard Overview</h1>
+      <h1 className="text-black">Dashboard Overview</h1>
       <Row className="text-white">
         <Col sm="4">
           <Card>
