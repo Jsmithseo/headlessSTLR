@@ -27,18 +27,15 @@ export default function Index({ allPosts: { edges }, preview }) {
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         <div>
           this is more content
-          <div>
-            <h1>Welcome to Your Project</h1>
-            <Link href="/dashboard">
-              <Button color="primary">Go to Dashboard</Button>
-            </Link>
-          </div>
           <RegisterLink href="/register" className="mx-10">
             Register
           </RegisterLink>
           <RegisterLink href="/protected" className="mx-10">
             visit protected route
           </RegisterLink>
+	  <Link href="/dashboard">
+	   <Button color="primary">Go to Dashboard</Button>
+	   </Link>
         </div>
       </Container>
     </Layout>
