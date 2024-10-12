@@ -15,7 +15,10 @@ import {
   dw3,
   cutoutTierra,
   brooke,
+  vasti,
+  akiko,
 } from "../../public/images";
+import CardYouTube from "./components/cardYoutube";
 
 function Main() {
   const artists_and_educators = [
@@ -71,8 +74,34 @@ function Main() {
     },
   ];
 
+  const featured_artists = [
+    {
+      name: "Vasti Jackson",
+      genre: "Blues",
+      description:
+        "Vasti Jackson is an American electric blues guitarist, singer, songwriter and record producer. ",
+      href: "https://www.stlrentertainment.com/vasti-jackson/",
+      alt: "Visit Vasti’s profile page",
+      imgSrc: vasti,
+      embedId: "f4_MT5Bs5IA",
+      title:
+        "That&#39;s What Love Will Make You Do feat. Vasti Jackson | Playing For Change Band Live",
+    },
+    {
+      name: "Akiko Tsuruga",
+      genre: "Jazz",
+      imgSrc: akiko,
+      description:
+        "Dubbed “Queen of the Organ”. Akiko Tsuruga is a world renowned, jazz musician of the highest caliber.",
+      href: "https://www.stlrentertainment.com/akiko-tsuruga/",
+      alt: "Visit Akiko’s profile page",
+      embedId: "iMmoO2wpvQY",
+      title: "Aligator Boogaloo",
+    },
+  ];
+
   return (
-    <main className="bg-black flex flex-col p-4 sm:p-6 md:p-8 lg:p-10 gap-5 text-white">
+    <main className="bg-black flex flex-col p-4 sm:p-6 md:p-8 lg:py-10 lg:px-40 gap-5 text-white">
       <div className="artist-roster flex flex-col gap-4">
         <div>
           <h6 className="text-sm sm:text-base">ARTIST ROSTER</h6>
@@ -101,7 +130,7 @@ function Main() {
               </HomeButton>
             </div>
           </section>
-          <section className="grid grid-cols-[repeat(2,minmax(0,100px))] md:grid-cols-[repeat(4,minmax(0,100px))] gap-4 items-center justify-center flex-1">
+          <section className="grid grid-cols-[repeat(3,minmax(0,100px))] md:grid-cols-[repeat(4,minmax(0,100px))] gap-4 items-center justify-center flex-1">
             {artists_and_educators.slice(0, 8).map((item) => (
               <div
                 className="artist-showcase-item w-[100px] h-[100px] aspect-square border border-solid p-1 rounded-full border-[#333] overflow-hidden"
@@ -168,6 +197,63 @@ function Main() {
             </Link>
           ))}
         </figure>
+      </div>
+      <div className="grid items-center md:grid-cols-[40%_auto] gap-20">
+        <div>
+          {artists_and_educators.slice(9, 10).map((item) => (
+            <Image src={item.image_link} key={item.caption} alt="img" />
+          ))}
+        </div>
+        <div className="flex flex-col gap-5 ">
+          <h6 className=" text:lg md:text-2xl text-[#999999] font-bold">
+            STLR ENTERTAINMENT'S
+          </h6>
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Featured Artists of the Month <br />
+            for Jazz and Blues are ...
+          </h2>
+          <div className="flex flex-col gap-4 md:flex-row">
+            {featured_artists.map((artist) => (
+              <div
+                key={artist.name}
+                className="flex flex-col items-center justify-center box-border relative w-full gap-10"
+              >
+                <div
+                  className="relative items-center flex justify-center z-[1000000]"
+                  style={{
+                    backgroundImage: `url(${artist.imgSrc.src})`,
+                    backgroundPosition: "center",
+                    height: "270px",
+                    width: "100%",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <span className="absolute w-full h-full left-0 right-0 top-0 bottom-0 opacity-50 z-[1] bg-black"></span>
+
+                  <div className="z-50">
+                    <h2 className="text-2xl md:text-4xl font-bold">
+                      {`${artist.genre.toUpperCase()}: `}
+                      <br />
+                      {`${artist.name}: `}
+                    </h2>
+                  </div>
+                </div>
+
+                <CardYouTube embedId={artist.embedId} title={artist.title} />
+                <div className="artist link flex flex-col gap-4">
+                  <p className="text-[#999999]">
+                    {artist.description}
+                    <br />
+                    <Link href={artist.href} className="text-white underline">
+                      {artist.alt}
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );
