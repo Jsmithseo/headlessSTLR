@@ -14,3 +14,8 @@ export { default as cutoutTierra } from "./cutout-tierra-legacy.webp";
 export { default as brooke } from "./cutout-graphic-brooke.webp";
 export { default as vasti } from "./Vasti-1.webp";
 export { default as akiko } from "./akiko-t.webp";
+export { default as shopping } from "./shopping-bag.webp";
+export { default as merchandise } from "./merchandise-2023.webp";
+export { default as cta } from "./cta.jpg";
+export { default as Andre } from "./Andre-Thierry-SBDC-Post-1.webp";
+export { default as AndreFlyer } from "./revised_andre_flyer.webp";

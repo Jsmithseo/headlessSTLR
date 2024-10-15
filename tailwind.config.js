@@ -22,6 +22,7 @@ module.exports = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         burgendy: "#800020",
+        darkGrey: "#999999",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -72,7 +73,55 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            h1: {
+              fontSize: theme("fontSize.4xl"),
+              fontWeight: theme("fontWeight.bold"),
+              lineHeight: theme("lineHeight.tight"),
+              marginTop: "0",
+              marginBottom: "0",
+              color: theme("colors.white"),
+            },
+            h2: {
+              fontSize: theme("fontSize.3xl"),
+              fontWeight: theme("fontWeight.semibold"),
+              lineHeight: theme("lineHeight.snug"),
+              marginTop: "0",
+              marginBottom: "0",
+              color: theme("colors.white"),
+            },
+            h3: {
+              fontSize: theme("fontSize.2xl"),
+              fontWeight: theme("fontWeight.semibold"),
+              lineHeight: theme("lineHeight.normal"),
+              marginTop: "0",
+              marginBottom: "0",
+            },
+            p: {
+              fontSize: theme("fontSize.lg"),
+              lineHeight: theme("lineHeight.relaxed"),
+              marginTop: "0",
+              marginBottom: "0",
+              color: theme("colors.darkGrey"),
+            },
+            img: {
+              marginTop: "0",
+              marginBottom: "0",
+            },
+            a: {
+              fontSize: theme("fontSize.lg"),
+              lineHeight: theme("lineHeight.relaxed"),
+              marginTop: "0",
+              marginBottom: "0",
+              color: theme("colors.white"),
+              decorate: theme("textDecoration.underline"),
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

@@ -6,10 +6,10 @@ import Main from "../../components/home/Main";
 
 function index() {
   return (
-    <>
+    <div className="">
       <Header />
       <Main />
-    </>
+    </div>
   );
 }
 
