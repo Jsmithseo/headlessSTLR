@@ -113,7 +113,9 @@ function SignupForm() {
           </aside>
           <InputContainer className="gap-3">
             <div>
-              <Label htmlFor="firstname" className="label-class">First name*</Label>
+              <Label htmlFor="firstname" className="label-class">
+                First name*
+              </Label>
               <Input
                 type="text"
                 id="firstname"
@@ -133,7 +135,9 @@ function SignupForm() {
               )}
             </div>
             <div>
-              <Label htmlFor="lastname" className="label-class">Lastname*</Label>
+              <Label htmlFor="lastname" className="label-class">
+                Lastname*
+              </Label>
               <Input
                 type="text"
                 id="lastname"
@@ -155,7 +159,9 @@ function SignupForm() {
           </InputContainer>
 
           <InputContainer className="flex-col gap-1">
-            <Label htmlFor="email" className="label-class">Email*</Label>
+            <Label htmlFor="email" className="label-class">
+              Email*
+            </Label>
             <Input
               type="email"
               id="email"
@@ -172,13 +178,17 @@ function SignupForm() {
                   message: "Please enter a valid email",
                 },
               }}
-              register={register} value={undefined}            />
+              register={register}
+              value={undefined}
+            />
             {errors.email && (
               <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
           </InputContainer>
           <InputContainer className="flex-col gap-1">
-            <Label htmlFor="password" className="label-class">Password*</Label>
+            <Label htmlFor="password" className="label-class">
+              Password*
+            </Label>
             <Input
               placeholder="Create a password"
               type={showPassword ? "text" : "password"}
@@ -219,7 +229,9 @@ function SignupForm() {
           </InputContainer>
           <Button
             className={`bg-burgendy font-bold leading-6 text-white`}
-            disabled={isSubmitting} children={undefined} onClick={undefined}>
+            disabled={isSubmitting}
+            onClick={undefined}
+          >
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (

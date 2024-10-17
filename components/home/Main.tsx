@@ -111,200 +111,195 @@ function Main() {
 
   const { register, handleSubmit, formState } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log(data);
-  };
+  // const onSubmit = async () => {
+  //   console.log(data);
+  // };
 
   return (
-    <main className="bg-black flex flex-col gap-5 text-white px-3 py-7 md:py-10 md:px-9 prose">
-      <Container>
-        <div className="artist-roster flex flex-col gap-4">
-          <div>
-            <h6 className="text-sm sm:text-base">ARTIST ROSTER</h6>
-          </div>
-          <div className="prose">
-            <h2>STLR PERFORMING ARTISTS & EDUCATORS</h2>
-          </div>
-
-          <div className="flex flex-col lg:flex-row gap-5">
-            <section className="flex flex-col gap-5 lg:w-1/3 flex-1">
-              <p>
-                Choose from a wide variety of artists in our roster, including
-                singers, musicians, tribute bands, DJ's, and more. Whether
-                you're planning a wedding, corporate event, music festival, or
-                any other special occasion, make your next event unforgettable
-                with STLR Entertainment.
-              </p>
-              <div className="flex flex-col md:flex-row gap-10">
-                <HomeButton className="text-sm sm:text-base w-min">
-                  PERFORMERS
-                </HomeButton>
-                <HomeButton className="text-sm sm:text-base w-min">
-                  EDUCATORS
-                </HomeButton>
-              </div>
-            </section>
-            <section className="flex flex-wrap gap-4 items-center justify-center flex-1">
-              {artists_and_educators.slice(0, 8).map((item) => (
-                <div
-                  className="artist-showcase-item w-[100px] h-[100px] aspect-square border border-solid p-1 rounded-full border-[#333] overflow-hidden"
-                  key={item.caption}
-                >
-                  <Link
-                    className="artist-showcase-item-thumb w-full h-full rounded-full overflow-hidden flex items-center justify-center"
-                    href={item.artist_link}
-                  >
-                    <Image
-                      src={item.image_link}
-                      alt={item.caption}
-                      className="w-full h-full object-cover"
-                      width={100}
-                      height={100}
-                      layout="responsive"
-                    />
-                  </Link>
-                </div>
-              ))}
-            </section>
-          </div>
+    <main className="bg-black flex flex-col gap-5 text-white">
+      <div className="artist-roster flex flex-col gap-4 lg:gap-10  px-7 py-14 lg:px-40">
+        <div>
+          <p className="font-bold">ARTIST ROSTER</p>
         </div>
-      </Container>
-
-      <Container>
-        <div className="about-us flex flex-col-reverse md:flex-col lg:flex-row gap-5 mt-8">
-          <div className="flex flex-col gap-5 lg:w-3/5">
-            <h3 className="text-lg sm:text-xl text-darkGrey font-bold">
-              ABOUT US
-            </h3>
-            <h2>Entertainment is Necessary</h2>
-            <p className="text-lg text-darkGrey leading-relaxed">
-              Founded in 2016, STLR Entertainment was born from a profound love
-              for music and a vision to unite gifted artists with those seeking
-              live music entertainment and educational presentations. Our goal
-              was to create a seamless platform where venues, educational
-              institutions, and music talent agency buyers could effortlessly
-              discover and connect with professional music artists.
-            </p>
-            <p className="text-lg text-darkGrey leading-relaxed">
-              STLR provides event music booking for live music entertainment and
-              educational presentations for venues and educational institutions
-              of all sizes. We bring together the services and talents of
-              professional music artists for music talent agency buyers and
-              educational music presentations. In addition, STLR provides live
-              music entertainment and consulting services, as well as music
-              industry resources.
-            </p>
-
-            <HomeButton className="w-max text-sm sm:text-base">
-              BOOK ARTISTS
-            </HomeButton>
-          </div>
-          <figure className="lg:w-2/5">
-            {artists_and_educators.slice(8, 9).map((item) => (
-              <Link key={item.caption} href={item.artist_link}>
-                <Image
-                  src={item.image_link}
-                  alt="image"
-                  layout="responsive"
-                  width={100}
-                  height={100}
-                  className="w-full h-auto"
-                />
-              </Link>
-            ))}
-          </figure>
+        <div className="prose">
+          <h2 className="font-extrabold lg:text-[50px]">
+            STLR PERFORMING ARTISTS & EDUCATORS
+          </h2>
         </div>
-      </Container>
 
-      <Container>
-        <div className=" featured artists grid items-center md:grid-cols-[40%_auto] gap-20">
-          <div>
-            {artists_and_educators.slice(9, 10).map((item) => (
-              <Image src={item.image_link} key={item.caption} alt="img" />
-            ))}
-          </div>
-          <div className="flex flex-col gap-5 ">
-            <h6 className=" text:lg md:text-2xl text-[darkGrey] font-bold">
-              STLR ENTERTAINMENT'S
-            </h6>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Featured Artists of the Month <br />
-              for Jazz and Blues are ...
-            </h2>
-            <div className="flex flex-col gap-4 md:flex-row">
-              {featured_artists.map((artist) => (
-                <div
-                  key={artist.name}
-                  className="flex flex-col items-center justify-center box-border relative w-full gap-10"
-                >
-                  <div
-                    className="relative items-center flex justify-center z-[1000000]"
-                    style={{
-                      backgroundImage: `url(${artist.imgSrc.src})`,
-                      backgroundPosition: "center",
-                      height: "270px",
-                      width: "100%",
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                    }}
-                  >
-                    <span className="absolute w-full h-full left-0 right-0 top-0 bottom-0 opacity-50 z-[1] bg-black"></span>
-
-                    <div className="z-50">
-                      <h2 className="text-2xl md:text-4xl font-bold">
-                        {`${artist.genre.toUpperCase()}: `}
-                        <br />
-                        {`${artist.name}: `}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <CardYouTube embedId={artist.embedId} title={artist.title} />
-                  <div className="artist link flex flex-col gap-4">
-                    <p className="text-[darkGrey]">
-                      {artist.description}
-                      <br />
-                      <Link href={artist.href}>{artist.alt}</Link>
-                    </p>
-                  </div>
-                </div>
-              ))}
+        <div className="flex flex-col lg:flex-row gap-5">
+          <section className="flex flex-col gap-5 lg:w-1/3 flex-1">
+            <p className="lg:text-2xl text-left text-[#999999] ">
+              Choose from a wide variety of artists in our roster, including
+              singers, musicians, tribute bands, DJ's, and more. Whether you're
+              planning a wedding, corporate event, music festival, or any other
+              special occasion, make your next event unforgettable with STLR
+              Entertainment.
+            </p>
+            <div className="flex flex-row gap-10">
+              <HomeButton className="text-sm sm:text-base w-min">
+                PERFORMERS
+              </HomeButton>
+              <HomeButton className="text-sm sm:text-base w-min">
+                EDUCATORS
+              </HomeButton>
             </div>
+          </section>
+          <section className="flex flex-wrap gap-4 items-center justify-center flex-1">
+            {artists_and_educators.slice(0, 8).map((item) => (
+              <div
+                className="artist-showcase-item w-[140px] h-[140px] aspect-square border border-solid p-2 rounded-full border-[#333] overflow-hidden"
+                key={item.caption}
+              >
+                <Link
+                  className="artist-showcase-item-thumb w-full h-full rounded-full overflow-hidden flex  justify-center"
+                  href={item.artist_link}
+                >
+                  <Image
+                    src={item.image_link}
+                    alt={item.caption}
+                    className="w-full h-full object-cover"
+                    layout="responsive"
+                  />
+                </Link>
+              </div>
+            ))}
+          </section>
+        </div>
+      </div>
+
+      <div className="about-us flex flex-col-reverse md:flex-row md:grid md:grid-cols-[auto_40%]  lg:flex-row gap-12 mt-8 px-7 py-14 lg:px-40">
+        <div className="flex flex-col gap-4 lg:w-full">
+          <h3 className="text-lg sm:text-xl text-darkGrey font-bold">
+            ABOUT US
+          </h3>
+          <h2 className="font-extrabold">Entertainment is Necessary</h2>
+          <p className="">
+            Founded in 2016, STLR Entertainment was born from a profound love
+            for music and a vision to unite gifted artists with those seeking
+            live music entertainment and educational presentations. Our goal was
+            to create a seamless platform where venues, educational
+            institutions, and music talent agency buyers could effortlessly
+            discover and connect with professional music artists.
+          </p>
+          <p className=" text-darkGrey">
+            STLR provides event music booking for{" "}
+            <Link href="https://www.stlrentertainment.com/artists/">
+              live music entertainment{" "}
+            </Link>
+            and{" "}
+            <Link href="https://www.stlrentertainment.com/educators/">
+              educational presentations
+            </Link>{" "}
+            for venues and educational institutions of all sizes. We bring
+            together the services and talents of professional music artists for
+            music talent agency buyers and educational music presentations. In
+            addition, STLR provides live music entertainment and consulting
+            services, as well as music industry resources.
+          </p>
+
+          <HomeButton className="w-max text-sm sm:text-base">
+            BOOK ARTISTS
+          </HomeButton>
+        </div>
+        <figure className="lg:w-full">
+          {artists_and_educators.slice(8, 9).map((item) => (
+            <Link key={item.caption} href={item.artist_link}>
+              <Image
+                src={item.image_link}
+                alt="image"
+                layout="responsive"
+                className="w-full h-auto"
+              />
+            </Link>
+          ))}
+        </figure>
+      </div>
+
+      <div className=" featured artists grid  md:grid-cols-[40%_auto] gap-20 px-7 py-14 lg:px-40">
+        <div>
+          {artists_and_educators.slice(9, 10).map((item) => (
+            <Image src={item.image_link} key={item.caption} alt="img" />
+          ))}
+        </div>
+        <div className="flex flex-col gap-5 ">
+          <h6 className=" text:lg md:text-2xl text-[darkGrey] font-bold">
+            STLR ENTERTAINMENT'S
+          </h6>
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Featured Artists of the Month <br />
+            for Jazz and Blues are ...
+          </h2>
+          <div className="flex flex-col gap-4 lg:flex-row">
+            {featured_artists.map((artist) => (
+              <div
+                key={artist.name}
+                className="flex flex-col items-center justify-center box-border relative w-full gap-10"
+              >
+                <div
+                  className="relative items-center flex justify-center z-[1000000]"
+                  style={{
+                    backgroundImage: `url(${artist.imgSrc.src})`,
+                    backgroundPosition: "center",
+                    height: "270px",
+                    width: "100%",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <span className="absolute w-full h-full left-0 right-0 top-0 bottom-0 opacity-50 z-[1] bg-black"></span>
+
+                  <div className="z-50">
+                    <h2 className="text-2xl md:text-4xl font-bold">
+                      {`${artist.genre.toUpperCase()}: `}
+                      <br />
+                      {`${artist.name}: `}
+                    </h2>
+                  </div>
+                </div>
+
+                <CardYouTube embedId={artist.embedId} title={artist.title} />
+                <div className="artist link flex flex-col gap-4">
+                  <p className="text-[darkGrey] text-sm leading-[1.75]">
+                    {artist.description}
+                    <br />
+                    <Link href={artist.href}>{artist.alt}</Link>
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </Container>
+      </div>
 
-      <Container className="flex flex-col lg:grid-cols-[40%_auto] lg:grid gap-10 items-center">
+      <div className="flex flex-col lg:grid-cols-[40%_auto] lg:grid gap-10 items-center px-7 py-14 lg:px-40">
         <aside className="newsletter flex flex-col gap-5">
           <h2 className="text-center">
             Join the official STLR Entertainment newsletter
           </h2>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-3"
-          >
+          <form className="flex flex-col gap-3">
             <Input
               label="Email"
               type="email"
-              {...register("email")}
               name="email"
-              className="max-w-md bg-gray-200 rounded-[3px] space-y-3"
+              className="w-full bg-gray-200 rounded-[3px] space-y-3"
             />
-            <Input
-              label="Firstname"
-              type="firstname"
-              {...register("firstname")}
-              name="firstname"
-              className="max-w-md bg-gray-200 rounded-[3px] space-y-3"
-            />
-            <Input
-              label="Lastname"
-              type="lastname"
-              {...register("lastname")}
-              name="lastname"
-              className="max-w-md bg-gray-200 rounded-[3px] space-y-3"
-            />
-            <article className="text-[#33475b] text-base leading-[1.7]">
+
+            <div className="flex flex-col md:flex-row gap-3 w-full">
+              <Input
+                label="Firstname"
+                type="firstname"
+                name="firstname"
+                className="w-full bg-gray-200 rounded-[3px] space-y-3"
+              />
+              <Input
+                label="Lastname"
+                type="lastname"
+                name="lastname"
+                className="w-full bg-gray-200 rounded-[3px] space-y-3"
+              />
+            </div>
+            <article className="text-[#33475b] text-sm leading-[1.7]">
               STLR Entertainment needs the contact information you provide to us
               to contact you about our products and services. You may
               unsubscribe from these communications at anytime. For information
@@ -312,9 +307,20 @@ function Main() {
               commitment to protecting your privacy, check out our Privacy
               Policy.
             </article>
-            <HomeButton className="bg-[#ff7a59] rounded items-start w-max text-sm font-bold">
+            <HomeButton className="bg-[#ff7a59] text-sm rounded mt-8">
               Submit
             </HomeButton>
+
+            <span className=" before:content['sprocket']  text-[#33475b]">
+              <Link
+                href="https://app.hubspot.com/signup-hubspot"
+                className="text-[#FF7A59] text-sm"
+              >
+                Create your own free forms
+              </Link>{" "}
+              to generate leads from your website
+              <strong></strong>
+            </span>
           </form>
         </aside>
         <aside className="w-full flex flex-col gap-10">
@@ -332,10 +338,10 @@ function Main() {
             />
           </div>
         </aside>
-      </Container>
+      </div>
       <section></section>
 
-      <section className="relative flex flex-col gap-10">
+      <section className="relative flex flex-col gap-10 items-center  justify-center">
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
@@ -346,12 +352,12 @@ function Main() {
           }}
         ></div>
         <div className="z-50 p-11 flex flex-col gap-10 items-center">
-          <div>
-            <Header1>Amazing Videos & Presentations</Header1>
-            <p>
+          <div className="flex flex-col gap-5 ">
+            <h2 className="text-center">Amazing Videos & Presentations</h2>
+            <p className="text-white lg:text-2xl text-center">
               STLR goes further than promoting music, we create, we develop, we
               Inspire. <br />
-              See what we accomplished with award-winning musician
+              See what we accomplished with award-winning musician{" "}
               <Link href="https://www.stlrentertainment.com/andre-thierry/">
                 Andre Thiery
               </Link>
@@ -362,13 +368,13 @@ function Main() {
             <Image src={AndreFlyer} alt="andre" />
             <Image src={Andre} alt="andre" />
           </div>
-          <HomeButton>Watch Now</HomeButton>
+          <HomeButton>WATCH NOW</HomeButton>
         </div>
       </section>
 
-      <section className="flex flex-col gap-10 prose">
+      <div className="flex flex-col gap-10 prose px-7 py-14 lg:px-40">
         <Header1>Giving Back</Header1>
-        <p>
+        <p className="lg:text-2xl">
           As part of our “Giving Back to the Community Commitment”, we partner
           with the{" "}
           <Link href="Gellert Family Busines Center">
@@ -380,7 +386,7 @@ function Main() {
           </Link>
           , mentoring students in modern business practices.
         </p>
-      </section>
+      </div>
     </main>
   );
 }

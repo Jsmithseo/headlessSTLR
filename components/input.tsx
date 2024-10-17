@@ -2,13 +2,13 @@
 import React from "react";
 import { useState } from "react";
 import { cn } from "../lib/utils";
-function Input({ label, register, error, ...props }) {
+function Input({ ...props }) {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex flex-col gap-1">
-      {label && <label htmlFor={props.id}>{label}</label>}
+    <div className="flex flex-col gap-1 w-full">
+      {props.label && <label htmlFor={props.id}>{props.label}</label>}
 
       <div
         className={cn(
@@ -16,7 +16,7 @@ function Input({ label, register, error, ...props }) {
           isFocused
             ? "border-[2px] border-brand-color-green"
             : "bg-gray-10 border-gray-300 outline-none",
-          error ? "border-red-500" : "",
+
           props.className
         )}
       >
@@ -25,7 +25,6 @@ function Input({ label, register, error, ...props }) {
           placeholder={props.placeholder}
           name={props.name}
           id={props.id}
-          {...register}
           onBlur={() => {
             setIsFocused(false);
           }}
@@ -38,7 +37,7 @@ function Input({ label, register, error, ...props }) {
           )}
         />
       </div>
-      {error && <p className="text-sm text-red-500">{error.message}</p>}
+
       {props.type === "password" && (
         <div className="my-2 flex flex-row items-center gap-2 self-start">
           <input

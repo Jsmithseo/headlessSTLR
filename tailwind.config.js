@@ -76,6 +76,8 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            maxWidth: "none",
+            color: "inherit",
             h1: {
               fontSize: theme("fontSize.4xl"),
               fontWeight: theme("fontWeight.bold"),
@@ -85,9 +87,9 @@ module.exports = {
               color: theme("colors.white"),
             },
             h2: {
-              fontSize: theme("fontSize.3xl"),
+              fontSize: "32px",
               fontWeight: theme("fontWeight.semibold"),
-              lineHeight: theme("lineHeight.snug"),
+              lineHeight: "1.43",
               marginTop: "0",
               marginBottom: "0",
               color: theme("colors.white"),
@@ -101,7 +103,7 @@ module.exports = {
             },
             p: {
               fontSize: theme("fontSize.lg"),
-              lineHeight: theme("lineHeight.relaxed"),
+              lineHeight: "1.75",
               marginTop: "0",
               marginBottom: "0",
               color: theme("colors.darkGrey"),
@@ -109,6 +111,12 @@ module.exports = {
             img: {
               marginTop: "0",
               marginBottom: "0",
+              padding: "0",
+            },
+            ul: {
+              marginTop: "0",
+              marginBottom: "0",
+              padding: "0",
             },
             a: {
               fontSize: theme("fontSize.lg"),

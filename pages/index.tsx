@@ -8,13 +8,11 @@ import Layout from "../components/layout";
 import { getAllPostsForHome } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
 import RegisterLink from "../components/register/register-link";
-import { Toaster } from "../components/ui/toaster";
 
 export default function Index({ allPosts: { edges }, preview }) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
 
-  
   return (
     <Layout preview={preview}>
       <Head>

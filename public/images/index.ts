@@ -19,3 +19,6 @@ export { default as merchandise } from "./merchandise-2023.webp";
 export { default as cta } from "./cta.jpg";
 export { default as Andre } from "./Andre-Thierry-SBDC-Post-1.webp";
 export { default as AndreFlyer } from "./revised_andre_flyer.webp";
+export { default as threads } from "./threads-logo.webp";
+export { default as tonySaunders } from "./tony-saunders-bluenote.webp";
+export { default as IMG_3146 } from "./IMG_3146.webp";

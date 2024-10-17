@@ -6,7 +6,7 @@ function HomeButton({ children, ...props }) {
   return (
     <Button
       className={cn(
-        "py-3 px-7 rounded-3xl text-white bg-[#c65a1b] border w-min outline-none border-gray-600 text-sm font-bold transition-all duration-300 hover:bg-[#32373c] hover:cursor-pointer flex flex-row items-center justify-center",
+        "lg:py-7 lg:px-8 py-5 px-6 rounded-full text-white bg-[#c65a1b] w-min outline-none font-bold transition-all duration-300 hover:bg-[#32373c] hover:cursor-pointer flex flex-row items-center justify-center",
         props.className
       )}
     >
