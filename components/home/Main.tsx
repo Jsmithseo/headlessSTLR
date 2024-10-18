@@ -174,7 +174,7 @@ function Main() {
             ABOUT US
           </h3>
           <h2 className="font-extrabold">Entertainment is Necessary</h2>
-          <p className="">
+          <p className=" lg:text-2xl">
             Founded in 2016, STLR Entertainment was born from a profound love
             for music and a vision to unite gifted artists with those seeking
             live music entertainment and educational presentations. Our goal was
@@ -182,13 +182,19 @@ function Main() {
             institutions, and music talent agency buyers could effortlessly
             discover and connect with professional music artists.
           </p>
-          <p className=" text-darkGrey">
+          <p className=" text-darkGrey lg:text-2xl">
             STLR provides event music booking for{" "}
-            <Link href="https://www.stlrentertainment.com/artists/">
-              live music entertainment{" "}
-            </Link>
+            <Link
+              className="lg:text-2xl"
+              href="https://www.stlrentertainment.com/artists/"
+            >
+              live music entertainment
+            </Link>{" "}
             and{" "}
-            <Link href="https://www.stlrentertainment.com/educators/">
+            <Link
+              href="https://www.stlrentertainment.com/educators/"
+              className="lg:text-2xl"
+            >
               educational presentations
             </Link>{" "}
             for venues and educational institutions of all sizes. We bring
@@ -372,8 +378,8 @@ function Main() {
         </div>
       </section>
 
-      <div className="flex flex-col gap-10 prose px-7 py-14 lg:px-40">
-        <Header1>Giving Back</Header1>
+      <div className="flex flex-col gap-10 prose px-7 py-14 lg:px-40 bg-[#101010]">
+        <h1>Giving Back</h1>
         <p className="lg:text-2xl">
           As part of our “Giving Back to the Community Commitment”, we partner
           with the{" "}

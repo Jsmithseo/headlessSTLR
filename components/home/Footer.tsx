@@ -61,11 +61,11 @@ function Footer() {
   ];
   return (
     <footer className="bg-black ">
-      <div className="flex flex-col gap-10 bg-[#121212] lg:flex-row px-7 py-7 lg:px-40">
+      <div className="flex flex-col gap-10 lg:gap-16 bg-[#121212] lg:flex-row px-7 py-10 lg:px-40">
         <div className="flex flex-col gap-5 flex-1">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-10">
             <h2 className="text-xl">THE STLR EXPERIENCE</h2>
-            <p className="md:text-2xl">
+            <p className="lg:text-xl">
               As the world changes, we adapt. We’ve re-crafted and perfected our
               offerings to ensure we meet your entertainment needs in the
               ever-changing environment. From live bands to virtual DJs, tribute
@@ -92,7 +92,7 @@ function Footer() {
             ))}
           </ul>
         </div>
-        <div className="flex flex-col gap-5 flex-1">
+        <div className="flex flex-col gap-10 flex-1">
           <h2 className="text-xl">CONTACT</h2>
 
           <div className="flex flex-col gap-2 ">
@@ -108,7 +108,7 @@ function Footer() {
             <p className="text-white">Billing and Accounting</p>
           </div>
         </div>
-        <div className="flex flex-col gap-5 flex-1">
+        <div className="flex flex-col gap-10 flex-1">
           <h2 className="text-lg">RECENT POSTS</h2>
           <div>
             <ul className="flex flex-col gap-5 list-none ">
