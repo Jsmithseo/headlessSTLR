@@ -9,6 +9,9 @@ import { getAllPostsForHome } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
 import RegisterLink from "../components/register/register-link";
 import { Toaster } from "../components/ui/toaster";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Link from 'next/link';  // Add this import for linking to the dashboard
+import { Button } from 'reactstrap';  // Add this import for Button
 
 export default function Index({ allPosts: { edges }, preview }) {
   const heroPost = edges[0]?.node;
@@ -25,10 +28,18 @@ export default function Index({ allPosts: { edges }, preview }) {
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         <div>
           this is more content
-          <RegisterLink href="/register" className="">
+          <RegisterLink href="/register" className="mx-10">
             Register
           </RegisterLink>
-          <Toaster />
+          <RegisterLink href="/protected" className="mx-10">
+            visit protected route
+          </RegisterLink>
+          <Link href="/dashboard">
+            <Button color="primary">Go to Dashboard</Button>
+          </Link>
+          <Link href="/artists/page">
+          <Button color="secondary">Artists</Button>
+          </Link>
         </div>
       </Container>
     </Layout>
