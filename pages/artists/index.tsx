@@ -149,7 +149,7 @@ function page() {
         </div>
 
         {/*artists filter */}
-        <div className="flex flex-col md:flex-row md:flex-wrap lg:grid lg:grid-cols-4 items-start justify-start gap-1">
+        <div className="flex flex-col md:flex-row md:flex-wrap lg:grid lg:grid-cols-5 items-start justify-start gap-1">
           <div className="my-4 mx-auto max-w-[300px] lg:mx-0  border-2 border-[#333] p-2.5 flex flex-col gap-3 items-center ">
             <Link
               href="https://www.stlrentertainment.com/mia-keys-on-fire/"
