@@ -9,7 +9,6 @@ import { getAllPostsForHome } from "../lib/api";
 import { CMS_NAME } from "../lib/constants";
 import RegisterLink from "../components/register/register-link";
 import { Toaster } from "../components/ui/toaster";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';  // Add this import for linking to the dashboard
 import { Button } from 'reactstrap';  // Add this import for Button
 
@@ -34,11 +33,16 @@ export default function Index({ allPosts: { edges }, preview }) {
           <RegisterLink href="/protected" className="mx-10">
             visit protected route
           </RegisterLink>
+        </div>
+
+        {/* Added the link and button for the dashboard */}
+        <div>
+          <h1>Welcome to Your Project</h1>
           <Link href="/dashboard">
             <Button color="primary">Go to Dashboard</Button>
           </Link>
-          <Link href="/artists/page">
-          <Button color="secondary">Artists</Button>
+          <Link href="/artists">
+            <Button color="primary">Artists</Button>
           </Link>
         </div>
       </Container>
