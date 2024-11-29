@@ -215,7 +215,7 @@ function LoginForm() {
       <footer>
         <p>
           New here?{" "}
-          <Link href="/register" className="text-burgendy underline">
+          <Link href="/signin" className="text-burgendy underline">
             register
           </Link>
         </p>
