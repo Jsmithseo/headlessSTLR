@@ -75,6 +75,10 @@ function SignupForm() {
     setShowPassword(!showPassword);
   };
 
+
+  
+
+
   return (
     <div className="form-container flex flex-col items-center justify-center gap-4">
       <Toaster />

@@ -1,25 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../button";
-
 import { Separator } from "../../components/ui/separator";
 import { LoadingSpinner } from "../../components/ui/loading-spinner";
 import { useToast } from "../../components/ui/use-toast";
 import { Toaster } from "../ui/toaster";
-
 import Input from "../../components/input";
 import InputContainer from "../../components/inputContainer";
 import Label from "../../components/label";
 import ErrorMessage from "../errorMessage";
-
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
-import { FaGithub } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa"; // Import Facebook icon
 import { FcGoogle } from "react-icons/fc";
-
 import { signIn } from "next-auth/react";
 
 function LoginForm() {
@@ -28,25 +22,16 @@ function LoginForm() {
     setShowPassword(!showPassword);
   }
 
-  //useRouter to get route definitions
   const router = useRouter();
-
-  //callbackUrl
   const callbackUrl = decodeURI(router.query?.callbackUrl ?? "/protected");
-
   const form = useForm();
-
   const { register, handleSubmit, formState } = form;
   const { errors, isSubmitting, isSubmitSuccessful } = formState;
 
-  //states for server messages
-
   const [errorMessage, setErrorMessage] = useState("");
-  const [loginSuccess, setloginSuccess] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  //router to navigate programatically on successful login
-  // const router = useRouter();
   async function onSubmit(data) {
     const loginData = {
       email: data.email,
@@ -56,12 +41,9 @@ function LoginForm() {
     };
     try {
       const result = await signIn("credentials", loginData);
-      // console.log(loginData);
-      // console.log(result);
       if (result?.ok) {
-        setloginSuccess(true);
-
-        setSuccessMessage("Login Successfull");
+        setLoginSuccess(true);
+        setSuccessMessage("Login Successful");
         setTimeout(() => {
           router.push(callbackUrl);
         }, 3000);
@@ -73,7 +55,6 @@ function LoginForm() {
     }
   }
 
-  //show toast on successful login
   const { toast } = useToast();
   useEffect(() => {
     if (loginSuccess) {
@@ -83,10 +64,8 @@ function LoginForm() {
     }
   }, [loginSuccess, successMessage, toast]);
 
-  //handling GitHub OAuth
-
   return (
-    <div className="form-container flex  flex-col items-center justify-center gap-4 h-screen">
+    <div className="form-container flex flex-col items-center justify-center gap-4 h-screen">
       <Toaster />
       <header className="">
         <p>Welcome</p>
@@ -112,11 +91,11 @@ function LoginForm() {
               className="hover:bg-gray-3 w-full hover:bg-gray-100"
               onClick={(e) => {
                 e.preventDefault();
-                signIn("github");
+                signIn("facebook"); // Use "facebook" for Facebook sign-in
               }}
             >
-              <FaGithub />
-              <p>Sign in with GitHub</p>
+              <FaFacebookF />
+              <p>Sign in with Facebook</p>
             </Button>
             <div
               id="separator"
@@ -126,24 +105,6 @@ function LoginForm() {
               <Separator className="w-48" />
             </div>
           </aside>
-          {/* <InputContainer className="flex-col gap-1">
-            <Label>Username*</Label>
-            <Input
-              placeholder="Enter your username"
-              name="username"
-              validation={{
-                required: {
-                  value: true,
-                  message: "Username is required",
-                },
-              }}
-              register={register}
-            />
-            {errors.username && (
-              <ErrorMessage>{errors.username.message}</ErrorMessage>
-            )}
-          </InputContainer> */}
-
           <InputContainer className="flex-col gap-1">
             <Label>Email*</Label>
             <Input
@@ -190,7 +151,6 @@ function LoginForm() {
                 id="show_password_checkbox"
                 onClick={_showPassword}
               />
-
               <label
                 htmlFor="show_password_checkbox"
                 className="text-sm font-normal"
@@ -207,16 +167,16 @@ function LoginForm() {
             {isSubmitting ? (
               <LoadingSpinner className="h-5 w-5 text-white" />
             ) : (
-              "login"
+              "Login"
             )}
           </Button>
         </form>
       </main>
       <footer>
         <p>
-          New here?{" "}
-          <Link href="/register" className="text-burgendy underline">
-            register
+          Forgot your password?{" "}
+          <Link href="/forgot-password" className="text-burgendy underline">
+            Reset it here
           </Link>
         </p>
       </footer>
